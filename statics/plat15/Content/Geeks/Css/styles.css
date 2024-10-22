@@ -1,9 +1,11 @@
 ﻿/* Estilos Gerais */
 :root {
-  --geeks-primary: #0277bd;
+  --geeks-primary: #003fff;
 
-  --geeks-lightPrimary: #0397ef;
-  --geeks-darkPrimary: #01578b;
+  --geeks-lightPrimary: #003fff;
+  --geeks-darkPrimary: #0a1f5c;
+
+  /* linear-gradient(90deg, #003fff, #0a1f5c) !important; */
 
   --geeks-gray: #cccccc;
   --geeks-lightGray: #eeeeee;
@@ -247,7 +249,7 @@ a:active {
 }
 
 .k-state-selected {
-  background-color: #1984c8 !important;
+  background-color: #003fff !important;
 }
 
 .k-grid table > tbody[role="rowgroup"] > tr {
