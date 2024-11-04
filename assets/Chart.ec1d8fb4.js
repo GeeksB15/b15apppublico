@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:assets/Chart.ec1d8fb4.js
 import{c as Xi}from"./index.9e105e33.js";var Yr={exports:{}};/*!
-========
-import{c as Xi}from"./index.7582ccc4.js";var Yr={exports:{}};/*!
->>>>>>>> df6eaf8e685039a5e3b9f284aa48924336f9234f:assets/Chart.abb4131c.js
  * Chart.js v2.9.4
  * https://www.chartjs.org
  * (c) 2020 Chart.js Contributors
