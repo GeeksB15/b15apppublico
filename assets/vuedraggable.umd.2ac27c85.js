@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:assets/vuedraggable.umd.2ac27c85.js
 import{bi as Pr,V as Kr,c as Br,g as Hr}from"./index.e4a389e3.js";var Dr={exports:{}},Wr=Pr(Kr);/**!
-========
-import{bi as Pr,V as Kr,c as Br,g as Hr}from"./index.a266b7f5.js";var Dr={exports:{}},Wr=Pr(Kr);/**!
->>>>>>>> 6475101fbf084f44b50ef1bbe816415bc002d4e7:assets/vuedraggable.umd.68abe3ee.js
  * Sortable 1.14.0
  * @author	RubaXa   <trash@rubaxa.org>
  * @author	owenm    <owen23355@gmail.com>

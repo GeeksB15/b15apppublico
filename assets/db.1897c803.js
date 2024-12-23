@@ -1,5 +1,0 @@
-<<<<<<<< HEAD:assets/db.78c67b97.js
-import{b as r,ay as e,az as o,aA as l}from"./index.e4a389e3.js";var s=r(async({app:a})=>{await e.usuario.inicializaLogado(),a.config.globalProperties.$db=e,globalThis.$db=e,a.config.globalProperties.$erp=o,a.config.globalProperties.$erpUpdate=o,a.config.globalProperties.$erpPut=o,a.config.globalProperties.$erpDelete=o,globalThis.$erp=o,globalThis.$erpUpdate=o,globalThis.$erpPut=o,globalThis.$erpDelete=o,a.config.globalProperties.$plataforma=l,globalThis.$plataforma=l});export{s as default};
-========
-import{b as r,ay as e,az as o,aA as l}from"./index.a266b7f5.js";var s=r(async({app:a})=>{await e.usuario.inicializaLogado(),a.config.globalProperties.$db=e,globalThis.$db=e,a.config.globalProperties.$erp=o,a.config.globalProperties.$erpUpdate=o,a.config.globalProperties.$erpPut=o,a.config.globalProperties.$erpDelete=o,globalThis.$erp=o,globalThis.$erpUpdate=o,globalThis.$erpPut=o,globalThis.$erpDelete=o,a.config.globalProperties.$plataforma=l,globalThis.$plataforma=l});export{s as default};
->>>>>>>> 6475101fbf084f44b50ef1bbe816415bc002d4e7:assets/db.1897c803.js
