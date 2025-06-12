@@ -111,7 +111,7 @@ Conexão e permissão
       return result;
     };
 
-    this.ExecuteSQLAsync = async function (sqlSentence, structureCall) {
+    this.ExecuteSQLAsync = async function (sqlSentence, structureCall, timeout = 30000) {
       return new Promise(resolve => {
         var result = null;
         var data;
@@ -144,6 +144,7 @@ Conexão e permissão
         $.ajax({
           type: "POST",
           url: url,
+          timeout,
           data: {
             database: requestDatabase,
             sentence: data,
