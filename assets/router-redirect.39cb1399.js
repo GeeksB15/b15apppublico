@@ -1,0 +1,1 @@
+var c=async({router:e})=>{const a=new URLSearchParams(window.location.search).get("redirect");if(a){await e.replace(a);const r=window.location.origin+e.currentRoute.value.href;window.history.replaceState({},"",r)}};export{c as default};
