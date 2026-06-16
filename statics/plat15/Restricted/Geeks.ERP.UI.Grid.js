@@ -2,6 +2,96 @@ String.prototype.replaceAll = String.prototype.replaceAll || function (needle, r
   return this.split(needle).join(replacement);
 };
 
+//#region ::. Normaliza valores numéricos/monetários (pt-BR) digitados no filtro das grades .::
+//
+// As colunas monetárias/numéricas das grades não possuem metadados de tipo
+// reconhecidos pelo FilterMenu do Kendo, então o filtro trata o valor digitado
+// e o valor da célula como texto puro.
+//
+// 1) Para "Igual"/"Não é igual" (eq/neq), normaliza "79,20"/"79.20"/"79,2" para
+//    "79.2", igualando ao texto que `String(dataItem[campo])` produz.
+// 2) Para "Maior/Menor (ou igual)" (gte/gt/lte/lt), além de normalizar o
+//    separador decimal, converte o valor para Number após o _parse padrão do
+//    Kendo (que sempre devolve string), pois esses operadores comparam o
+//    valor digitado e o da célula como texto puro (ex.: "79.2" >= "530" é
+//    true por comparação lexicográfica). Com Number dos dois lados, o Kendo
+//    monta a expressão sem o wrapper de string e a comparação fica numérica.
+(function () {
+  var REGEX_NUMERO_PTBR = /^-?\d{1,3}(\.\d{3})*(,\d+)?$|^-?\d+,\d+$/;
+  var REGEX_NUMERO_DECIMAL = /^-?\d+(\.\d+)?$/;
+  var OPERADORES_TEXTO_FILTRO_GRADE = ["eq", "neq"];
+  var OPERADORES_ORDEM_FILTRO_GRADE = ["gte", "gt", "lte", "lt"];
+  var OPERADORES_NUMERICOS_FILTRO_GRADE = OPERADORES_TEXTO_FILTRO_GRADE.concat(OPERADORES_ORDEM_FILTRO_GRADE);
+
+  // Converte "79,20" / "79.20" / "79,2" / "79.2" / "1.234,56" em Number (79.2 / 1234.56).
+  // Retorna o valor original se não parecer um número.
+  var paraNumeroFiltroGrade = function (valor) {
+    if (typeof valor !== "string")
+      return valor;
+
+    var texto = valor.trim();
+
+    if (texto === "")
+      return valor;
+
+    if (REGEX_NUMERO_PTBR.test(texto))
+      texto = texto.replace(/\./g, "").replace(",", ".");
+    else if (!REGEX_NUMERO_DECIMAL.test(texto))
+      return valor;
+
+    var numero = parseFloat(texto);
+
+    return isNaN(numero) ? valor : numero;
+  };
+
+  // Após o _merge/_parse padrão do Kendo (que sempre devolve string), ajusta
+  // o valor final de cada filtro numérico: string normalizada para eq/neq e
+  // Number para os operadores de ordem. Percorre recursivamente os grupos
+  // aninhados que o FilterMenu cria quando "extra: true" (2 condições).
+  var normalizarFiltrosMergeadosGrade = function (filtro) {
+    if (!filtro || !filtro.filters)
+      return;
+
+    $.each(filtro.filters, function (index, item) {
+      if (item.filters) {
+        normalizarFiltrosMergeadosGrade(item);
+        return;
+      }
+
+      if ($.inArray(item.operator, OPERADORES_NUMERICOS_FILTRO_GRADE) < 0)
+        return;
+
+      var numero = paraNumeroFiltroGrade(item.value);
+
+      if (typeof numero !== "number")
+        return;
+
+      item.value = ($.inArray(item.operator, OPERADORES_ORDEM_FILTRO_GRADE) > -1) ? numero : String(numero);
+    });
+  };
+
+  var mergeFilterMenuOriginal = kendo.ui.FilterMenu.fn._merge;
+
+  kendo.ui.FilterMenu.fn._merge = function (filtro) {
+    $.each(filtro.filters, function (index, item) {
+      if ($.inArray(item.operator, OPERADORES_NUMERICOS_FILTRO_GRADE) > -1) {
+        var numero = paraNumeroFiltroGrade(item.value);
+
+        if (typeof numero === "number")
+          item.value = String(numero);
+      }
+    });
+
+    var resultado = mergeFilterMenuOriginal.call(this, filtro);
+
+    normalizarFiltrosMergeadosGrade(resultado);
+
+    return resultado;
+  };
+})();
+
+//#endregion
+
 function ExcelExport (e) {
   var rows = e.workbook.sheets[0].rows;
   var newRows = []
@@ -1011,7 +1101,6 @@ function ExcelExport (e) {
       //#endregion
 
       var remontaLayout = function () {
-
         var layoutRemontar = gridMontar.data("kendoGrid").getOptions();
 
         var filtraGrade = false;
