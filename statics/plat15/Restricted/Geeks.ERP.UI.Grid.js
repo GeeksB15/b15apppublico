@@ -810,7 +810,7 @@ function ExcelExport (e) {
                           else if (gridCampo.geeksType == 'datahora' || gridCampo.geeksType == 'data')
                             valores += ((valores == "") ? "" : ",") + ((options[gridCampo.field] && options[gridCampo.field] != 'null' && options[gridCampo.field].trim() != '') ? "'" + options[gridCampo.field] + "'" : null);
                           else
-                            valores += ((valores == "") ? "" : ",") + ((options[gridCampo.field] && options[gridCampo.field] != 'null') ? "'" + options[gridCampo.field] + "'" : null);
+                            valores += ((valores == "") ? "" : ",") + ((options[gridCampo.field] && options[gridCampo.field] != 'null') ? "N'" + options[gridCampo.field].replace(/'/g, "''") + "'" : null);
                         }
                       }
                     }
@@ -869,7 +869,7 @@ function ExcelExport (e) {
                         else if (campoGrid.geeksType == 'datahora' || campoGrid.geeksType == 'data')
                           campos += ((campos == "") ? "" : ",") + campoGrid.field + "=" + ((options[campoGrid.field] && options[campoGrid.field] != 'null' && options[campoGrid.field].trim() != '') ? "'" + options[campoGrid.field].replace(/'/g, "''") + "'" : "null");
                         else
-                          campos += ((campos == "") ? "" : ",") + campoGrid.field + "=" + ((options[campoGrid.field] && options[campoGrid.field] != 'null') ? "'" + options[campoGrid.field].replace(/'/g, "''") + "'" : "null");
+                          campos += ((campos == "") ? "" : ",") + campoGrid.field + "=" + ((options[campoGrid.field] && options[campoGrid.field] != 'null') ? "N'" + options[campoGrid.field].replace(/'/g, "''") + "'" : "null");
                       }
                     } else if (campoGrid.Identificador) {
                       if (options[campoGrid.field] != "")
