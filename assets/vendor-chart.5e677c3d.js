@@ -1,4 +1,4 @@
-import{c as Xi}from"./index.9fab4e50.js";var Yr={exports:{}};/*!
+import{c as Xi}from"./index.67f9303f.js";var Yr={exports:{}};/*!
  * Chart.js v2.9.4
  * https://www.chartjs.org
  * (c) 2020 Chart.js Contributors
